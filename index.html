@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Convite Especial 🤍</title>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body { margin: 0; background: #faf9f6; font-family: 'Montserrat', sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; overflow: hidden; }
+        
+        /* Pétalas de fundo */
+        .petal { position: absolute; background: #eee5d1; border-radius: 150% 0 150% 0; opacity: 0.5; pointer-events: none; z-index: 1; animation: fall 5s linear infinite; }
+        @keyframes fall { 0% { transform: translateY(-10vh) rotate(0deg); opacity: 0; } 10% { opacity: 0.7; } 100% { transform: translateY(110vh) rotate(360deg); opacity: 0; } }
+
+        /* Telas */
+        #tela-inicial, #tela-pergunta { position: fixed; inset: 0; background: #faf9f6; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 1000; text-align: center; }
+        #tela-pergunta { display: none; z-index: 1100; }
+
+        /* Card do Vídeo */
+        .card { width: 85%; max-width: 380px; background: white; border-radius: 15px; border: 2px solid #d4af37; box-shadow: 0 15px 35px rgba(0,0,0,0.1); overflow: hidden; z-index: 10; display: none; }
+        .video-box { padding: 10px; background: #000; }
+        video { width: 100%; display: block; border-radius: 5px; }
+        .texto-card { padding: 20px; border-top: 2px solid #d4af37; }
+
+        /* Botões */
+        h1 { font-family: 'Great Vibes', cursive; color: #8c7b60; font-size: 2.8rem; margin: 0; }
+        .btn { padding: 15px 35px; border-radius: 50px; border: none; cursor: pointer; font-weight: 600; margin-top: 20px; transition: 0.3s; }
+        .btn-principal { background: #8c7b60; color: white; font-family: 'Great Vibes', cursive; font-size: 2rem; }
+        .btn-sim { background: #d4af37; color: white; padding: 12px 40px; }
+    </style>
+</head>
+<body>
+
+    <audio id="audioElement" loop><source src="musica1.mp3" type="audio/mpeg"></audio>
+
+    <div id="tela-inicial">
+        <h1 style="color:#555; margin-bottom: 20px;">Você recebeu uma mensagem...</h1>
+        <button class="btn btn-principal" onclick="iniciar()">Abrir Convite ❤️</button>
+    </div>
+
+    <div id="tela-pergunta">
+        <h1 style="font-size: 2.5rem; padding: 0 20px; color: #333;">Você aceita entrar comigo?</h1>
+        <button class="btn btn-sim" onclick="confirmar()">SIM ❤️</button>
+    </div>
+
+    <div class="card" id="card-principal">
+        <div class="video-box">
+            <video id="videoElement" playsinline muted>
+                <source src="video1.mp4" type="video/mp4">
+            </video>
+        </div>
+        <div class="texto-card">
+            <h1 id="titulo-final">Especial para você</h1>
+            <p style="color:#888; font-size:0.7rem; letter-spacing:2px;">ASSISTA ATÉ O FINAL</p>
+        </div>
+    </div>
+
+    <script>
+        const v = document.getElementById("videoElement");
+        const a = document.getElementById("audioElement");
+        const card = document.getElementById("card-principal");
+        const perg = document.getElementById("tela-pergunta");
+        const init = document.getElementById("tela-inicial");
+
+        function iniciar() {
+            init.style.display = "none";
+            card.style.display = "block";
+            a.play().catch(e => console.log("Erro áudio"));
+            v.play();
+        }
+
+        // Função que trava o vídeo e mostra a pergunta
+        function monitorar() {
+            if (v.currentTime >= 18.9) {
+                v.pause();
+                // IMPORTANTE: Remove o monitoramento para não dar loop
+                v.removeEventListener('timeupdate', monitorar);
+                card.style.display = "none";
+                perg.style.display = "flex";
+            }
+        }
+
+        v.addEventListener('timeupdate', monitorar);
+
+        function confirmar() {
+            perg.style.display = "none";
+            card.style.display = "block";
+            document.getElementById("titulo-final").innerText = "Te amo! ❤️";
+            v.play(); // O vídeo segue até o fim
+        }
+
+        // Pétalas caindo
+        for (let i = 0; i < 20; i++) {
+            const p = document.createElement('div');
+            p.className = 'petal';
+            p.style.left = Math.random() * 100 + 'vw';
+            p.style.animationDelay = Math.random() * 5 + 's';
+            p.style.width = p.style.height = (Math.random() * 15 + 10) + 'px';
+            document.body.appendChild(
