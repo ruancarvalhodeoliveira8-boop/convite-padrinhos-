@@ -8,28 +8,26 @@
     <style>
         body { margin: 0; background: #faf9f6; font-family: 'Montserrat', sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; overflow: hidden; }
         
-        /* Pétalas Champanhe */
         .petal { position: absolute; background: #eee5d1; border-radius: 150% 0 150% 0; opacity: 0.6; pointer-events: none; z-index: 1; animation: fall 5s linear infinite; }
         @keyframes fall { 0% { transform: translateY(-10vh) rotate(0deg); opacity: 0; } 10% { opacity: 0.8; } 100% { transform: translateY(110vh) rotate(360deg); opacity: 0; } }
 
-        /* Telas */
         #tela-inicial, #tela-pergunta { position: fixed; inset: 0; background: #faf9f6; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 1000; text-align: center; }
-        #tela-pergunta { display: none; z-index: 1100; }
+        #tela-pergunta { display: none; z-index: 1100; padding: 20px; }
 
-        /* Card do Vídeo */
         .card { width: 85%; max-width: 380px; background: white; border-radius: 15px; border: 2px solid #d4af37; box-shadow: 0 15px 35px rgba(0,0,0,0.1); overflow: hidden; z-index: 10; display: none; }
         .v-box { padding: 10px; background: #000; }
         video { width: 100%; display: block; border-radius: 5px; }
         .content { padding: 25px; border-top: 2px solid #d4af37; text-align: center; }
 
-        /* Fontes e Botões */
         h1 { font-family: 'Great Vibes', cursive; color: #8c7b60; font-size: 2.8rem; margin: 0; }
-        .btn { padding: 15px 35px; border-radius: 50px; border: none; cursor: pointer; font-weight: 600; margin-top: 20px; transition: 0.3s; }
+        
+        /* BOTÕES */
+        .btn { padding: 15px 30px; border-radius: 50px; border: none; cursor: pointer; font-weight: 600; margin-top: 20px; transition: 0.3s; font-size: 1rem; }
         .btn-abrir { background: #8c7b60; color: white; font-family: 'Great Vibes', cursive; font-size: 2rem; }
         
-        .btn-group { display: flex; gap: 15px; justify-content: center; margin-top: 20px; }
+        .container-botoes { display: flex !important; gap: 15px; justify-content: center; margin-top: 30px; width: 100%; }
         .btn-sim { background: #d4af37; color: white; min-width: 120px; }
-        .btn-nao { background: #eee; color: #777; min-width: 120px; }
+        .btn-nao { background: #fce4e4; color: #cc8888; min-width: 120px; border: 1px solid #eccaca; }
     </style>
 </head>
 <body>
@@ -42,10 +40,10 @@
     </div>
 
     <div id="tela-pergunta">
-        <h1 style="font-size: 2.5rem; padding: 0 20px; color: #333;">Vocês aceitam ser nossos padrinhos?</h1>
-        <div class="btn-group">
+        <h1 style="font-size: 2.5rem; color: #333;">Vocês aceitam ser nossos padrinhos?</h1>
+        <div class="container-botoes">
             <button class="btn btn-sim" onclick="aceitar()">SIM! 🥂</button>
-            <button class="btn btn-nao" onclick="recusar()">NÃO   </button>
+            <button class="btn btn-nao" onclick="recusar()">NÃO</button>
         </div>
     </div>
 
@@ -94,10 +92,9 @@
         }
 
         function recusar() {
-            alert("Vocês são indispensáveis para nós! Por favor, digam SIM! ❤️");
+            alert("Vocês são indispensáveis para nós! Digam que SIM! ❤️");
         }
 
-        // Criar pétalas
         for (let i = 0; i < 20; i++) {
             const p = document.createElement('div');
             p.className = 'petal';
